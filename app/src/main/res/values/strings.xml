@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CyberSurvivalJava</string>
+    <string name="loginWelcome">Welcome to CyberSurvival. Please Sign in or Create New Account</string>
 </resources>
