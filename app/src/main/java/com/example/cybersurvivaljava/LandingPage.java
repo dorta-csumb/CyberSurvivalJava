@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -41,12 +42,25 @@ public class LandingPage extends AppCompatActivity {
             if (user != null) {
                 binding.landingNameTextView.setText(user.getUsername());
             }
+            if (user.isAdmin()) {
+                binding.adminButton.setVisibility(View.VISIBLE);
+            }
         });
 
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loggedInUserId = LOGGED_OUT;
+                updateSharedPreference();
+                getIntent().putExtra(LANDING_PAGE_USER_ID, LOGGED_OUT);
+                startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext()));
+            }
+        });
 
+        binding.adminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastMaker("Implement later");
             }
         });
     }
@@ -70,5 +84,9 @@ public class LandingPage extends AppCompatActivity {
         SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
         sharedPrefEditor.putInt(getString(R.string.preference_userId_key), loggedInUserId);
         sharedPrefEditor.apply();
+    }
+
+    private void toastMaker(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
