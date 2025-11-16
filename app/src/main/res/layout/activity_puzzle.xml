@@ -1,62 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/puzzle_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#050505"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time: 00:00"
-        android:textStyle="bold"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tvChances"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chances Remaining: 4"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginTop="4dp" />
-
-    <TextView
-        android:id="@+id/tvQuestion"
+    <!-- Terminal frame -->
+    <LinearLayout
+        android:id="@+id/terminal_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Question will appear here."
-        android:textSize="18sp"
-        android:layout_marginTop="12dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#111111">
 
-    <Button
-        android:id="@+id/btnA"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="A"
-        android:layout_marginTop="12dp" />
+        <!-- "Status bar" with timer and chances -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
 
-    <Button
-        android:id="@+id/btnB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="B"
-        android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/tvTimer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TIME 00:00"
+                android:textColor="#00FF66"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:fontFamily="monospace" />
 
-    <Button
-        android:id="@+id/btnC"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="C"
-        android:layout_marginTop="8dp" />
+            <TextView
+                android:id="@+id/tvChances"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHANCES: 4"
+                android:textColor="#00FF66"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/btnD"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="D"
-        android:layout_marginTop="8dp" />
+        <!-- Terminal "screen" area -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:padding="8dp">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="> Booting terminal...\n> Awaiting command / selection..."
+                android:textColor="#00FF66"
+                android:textSize="16sp"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="2dp" />
+        </ScrollView>
+
+        <!-- "Command options" (your existing multiple choice) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/btnA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A)"
+                android:textAllCaps="false"
+                android:fontFamily="monospace"
+                android:background="#222222"
+                android:textColor="#00FF66"
+                android:layout_marginBottom="6dp" />
+
+            <Button
+                android:id="@+id/btnB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="B)"
+                android:textAllCaps="false"
+                android:fontFamily="monospace"
+                android:background="#222222"
+                android:textColor="#00FF66"
+                android:layout_marginBottom="6dp" />
+
+            <Button
+                android:id="@+id/btnC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="C)"
+                android:textAllCaps="false"
+                android:fontFamily="monospace"
+                android:background="#222222"
+                android:textColor="#00FF66"
+                android:layout_marginBottom="6dp" />
+
+            <Button
+                android:id="@+id/btnD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="D)"
+                android:textAllCaps="false"
+                android:fontFamily="monospace"
+                android:background="#222222"
+                android:textColor="#00FF66"
+                android:layout_marginBottom="4dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

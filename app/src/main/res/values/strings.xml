@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CyberSurvivalJava</string>
+    <string name="chances_remaining">Chances Remaining: %d</string>
 </resources>
