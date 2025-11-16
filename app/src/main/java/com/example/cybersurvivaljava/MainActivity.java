@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                startActivity(RegisterActivity.registerIntentFactory(getApplicationContext()));
+                toastMaker("Coming Soon");
             }
         });
     }

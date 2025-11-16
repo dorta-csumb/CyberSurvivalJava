@@ -11,12 +11,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.cybersurvivaljava.database.entities.Problems;
 import com.example.cybersurvivaljava.database.entities.User;
-import com.example.cybersurvivaljava.database.entities.userProblems;
+import com.example.cybersurvivaljava.database.entities.UserProblems;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Problems.class, userProblems.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Problems.class, UserProblems.class}, version = 1, exportSchema = false)
 public abstract class CyberSurvivalDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "CyberSurvivalDatabase";
     public static final String USER_TABLE_NAME = "usertable";
