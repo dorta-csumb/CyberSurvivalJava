@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             if (user != null) {
                 String password = binding.passwordLoginEditText.getText().toString();
                 if (password.equals(user.getPassword())) {
-//                    startActivity();
+                    startActivity(LandingPage.landingPageIntentFactory(getApplicationContext(), user.getUserId()));
                     toastMaker("Login successful");
                 } else {
                     toastMaker("Incorrect password");

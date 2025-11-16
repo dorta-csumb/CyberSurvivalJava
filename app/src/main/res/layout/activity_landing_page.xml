@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LandingPage">
+
+    <TextView
+        android:id="@+id/landingTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/cardview_dark_background" />
+
+    <TextView
+        android:id="@+id/landingNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:gravity="end"
+        android:text="MYNAME"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/landingTopBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/programmingButton"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="150dp"
+        android:text="Programming"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/landingNameTextView" />
+
+    <Button
+        android:id="@+id/cybersecurityButton"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="4dp"
+        android:text="CyberSecurity"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/programmingButton" />
+
+    <Button
+        android:id="@+id/circuitryButton"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="4dp"
+        android:text="Circuitry"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cybersecurityButton" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="4dp"
+        android:text="Logout"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circuitryButton" />
+
+    <Button
+        android:id="@+id/adminButton"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="4dp"
+        android:text="Admin Panel"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoutButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

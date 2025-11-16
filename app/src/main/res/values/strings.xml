@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">CyberSurvivalJava</string>
     <string name="loginWelcome">Welcome to CyberSurvival. Please Sign in or Create New Account</string>
+    <string name="preference_file_key">jesuslopezPreferenceFileNameCyberSurvival</string>
+    <string name="preference_userId_key">jesuslopezPreferenceUserIdKeyCyberSurvival</string>
 </resources>
