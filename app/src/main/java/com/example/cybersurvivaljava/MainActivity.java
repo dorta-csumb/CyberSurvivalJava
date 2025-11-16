@@ -1,5 +1,7 @@
 package com.example.cybersurvivaljava;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -25,12 +27,23 @@ public class MainActivity extends AppCompatActivity {
         binding.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toastMaker("Sign in button clicked");
+                startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+            }
+        });
+
+        binding.registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                startActivity(RegisterActivity.registerIntentFactory(getApplicationContext()));
             }
         });
     }
 
     private void toastMaker(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    static Intent mainActivityIntentFactory(Context context) {
+        return new Intent(context, MainActivity.class);
     }
 }
