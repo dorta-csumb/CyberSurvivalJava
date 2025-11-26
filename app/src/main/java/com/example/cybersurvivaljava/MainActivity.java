@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         binding.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(RegisterActivity.registerIntentFactory(getApplicationContext()));
-                toastMaker("Coming Soon");
+                startActivity(RegisterActivity.registerIntentFactory(getApplicationContext()));
+//                toastMaker("Coming Soon");
             }
         });
     }
