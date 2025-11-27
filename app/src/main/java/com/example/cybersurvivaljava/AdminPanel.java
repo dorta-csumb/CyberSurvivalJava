@@ -44,8 +44,16 @@ public class AdminPanel extends AppCompatActivity {
         binding.newAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo
-                toastMaker("clicked new admin");
+                // Hide the button list
+                binding.adminButtonContainer.setVisibility(View.GONE);
+                // Show the fragment container
+                binding.fragmentContainerView.setVisibility(View.VISIBLE);
+
+                // Open the NewAdmin fragment
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_view, new NewAdmin())
+                        .addToBackStack(null) // This is important for the back button
+                        .commit();
             }
         });
 
