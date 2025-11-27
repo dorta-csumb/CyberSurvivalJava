@@ -7,11 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.cybersurvivaljava.databinding.ActivityMainBinding;
 
@@ -23,15 +19,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         int loggedInUserId = sharedPreferences.getInt(getString(R.string.preference_userId_key), LOGGED_OUT);
 
         if (loggedInUserId != LOGGED_OUT) {
-            startActivity(LandingPage.landingPageIntentFactory(getApplicationContext(), loggedInUserId));
+            Intent intent = LandingPage.landingPageIntentFactory(getApplicationContext(), loggedInUserId);
+            startActivity(intent);
+            finish();
+            return;
         }
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         binding.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
