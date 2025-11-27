@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.cybersurvivaljava.database.CyberSurvivalRepository;
 import com.example.cybersurvivaljava.databinding.ActivityAdminPanelBinding;
@@ -41,27 +38,29 @@ public class AdminPanel extends AppCompatActivity {
             }
         });
 
-        binding.newAdminButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Hide the button list
+        // Listen for changes in the back stack
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                // A fragment is visible
                 binding.adminButtonContainer.setVisibility(View.GONE);
-                // Show the fragment container
                 binding.fragmentContainerView.setVisibility(View.VISIBLE);
-
-                // Open the NewAdmin fragment
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_view, new NewAdmin())
-                        .addToBackStack(null) // This is important for the back button
-                        .commit();
+            } else {
+                // No fragments are visible
+                binding.adminButtonContainer.setVisibility(View.VISIBLE);
+                binding.fragmentContainerView.setVisibility(View.GONE);
             }
         });
 
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(LandingPage.landingPageIntentFactory(getApplicationContext(), loggedInUserId));
-            }
+        binding.newAdminButton.setOnClickListener(v -> {
+            // Just perform the transaction. The listener will handle the UI changes.
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_view, new NewAdmin())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        binding.backButton.setOnClickListener(v -> {
+            finish();
         });
     }
 
