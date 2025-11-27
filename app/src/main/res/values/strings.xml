@@ -11,4 +11,9 @@
     <string name="login">Login</string>
     <string name="create_your_account">Create Your Account</string>
     <string name="retype_password">Retype Password</string>
+    <string name="admin_panel">Admin Panel</string>
+    <string name="logout">Logout</string>
+    <string name="circuitry">Circuitry</string>
+    <string name="cybersecurity">CyberSecurity</string>
+    <string name="programming">Programming</string>
 </resources>

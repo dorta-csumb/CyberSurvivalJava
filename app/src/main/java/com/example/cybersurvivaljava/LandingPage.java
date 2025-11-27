@@ -32,7 +32,6 @@ public class LandingPage extends AppCompatActivity {
 
         loggedInUserId = getIntent().getIntExtra(LANDING_PAGE_USER_ID, LOGGED_OUT);
 
-        // This is the correct and reliable place to save the login state.
         updateSharedPreference();
 
         repository.getUserById(loggedInUserId).observe(this, user -> {
@@ -56,7 +55,7 @@ public class LandingPage extends AppCompatActivity {
         binding.adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMaker("Implement later");
+                startActivity(AdminPanel.adminPanelIntentFactory(getApplicationContext(), loggedInUserId));
             }
         });
     }

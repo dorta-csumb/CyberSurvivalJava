@@ -5,17 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LandingPage">
+    tools:context=".AdminPanel">
 
     <TextView
-        android:id="@+id/landingTopBar"
+        android:id="@+id/adminTopBar"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="@color/cardview_dark_background"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/landingNameTextView"
+        android:id="@+id/adminPanelNameTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="16dp"
@@ -23,64 +23,63 @@
         android:text="MYNAME"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/landingTopBar"
+        app:layout_constraintBottom_toBottomOf="@id/adminTopBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/programmingButton"
+        android:id="@+id/newAdminButton"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="150dp"
-        android:text="@string/programming"
+        android:text="New Admin"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landingNameTextView" />
+        app:layout_constraintTop_toBottomOf="@id/adminPanelNameTextView" />
 
     <Button
-        android:id="@+id/cybersecurityButton"
+        android:id="@+id/newQuestionButton"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="4dp"
-        android:text="@string/cybersecurity"
+        android:text="New Question"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/programmingButton" />
+        app:layout_constraintTop_toBottomOf="@id/newAdminButton" />
 
     <Button
-        android:id="@+id/circuitryButton"
+        android:id="@+id/deleteQuestionButton"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="4dp"
-        android:text="@string/circuitry"
+        android:text="Delete Question"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cybersecurityButton" />
+        app:layout_constraintTop_toBottomOf="@id/newQuestionButton" />
 
     <Button
-        android:id="@+id/logoutButton"
+        android:id="@+id/statisticsButton"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="4dp"
-        android:text="@string/logout"
+        android:text="Statistics"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/circuitryButton" />
+        app:layout_constraintTop_toBottomOf="@id/deleteQuestionButton" />
 
     <Button
-        android:id="@+id/adminButton"
+        android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="4dp"
-        android:text="@string/admin_panel"
+        android:text="Back"
         android:textSize="24sp"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoutButton" />
+        app:layout_constraintTop_toBottomOf="@id/statisticsButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
