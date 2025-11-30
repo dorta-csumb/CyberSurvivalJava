@@ -12,20 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CyberSurvivalJava">
 
-        <!-- ScoreActivity is now the LAUNCHER activity for testing -->
+        <!-- Revert ScoreActivity to be a normal, non-launcher activity -->
         <activity
             android:name=".ScoreActivity"
+            android:exported="false" />
+
+        <!-- Restore the original Launcher activity -->
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- MainActivity is now a regular activity -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
         </activity>
     </application>
 
