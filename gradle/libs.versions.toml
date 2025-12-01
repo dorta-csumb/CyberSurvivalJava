@@ -8,7 +8,7 @@ material = "1.13.0"
 activity = "1.11.0"
 constraintlayout = "2.2.1"
 
-recyclerview = "1.4.0" //keep recycler, roomCommon, and room Runtime versions
+recyclerview = "1.4.0" #keep recycler, roomCommon, and room Runtime versions
 roomCommonJvm = "2.8.3"
 roomRuntimeJvm = "2.8.3"
 
@@ -22,7 +22,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
-//keep new libraries: recycler, room-common, room-runtime
+#keep new libraries: recycler, room-common, room-runtime
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 room-runtime-jvm = { group = "androidx.room", name = "room-runtime-jvm", version.ref = "roomRuntimeJvm" }
