@@ -11,6 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CyberSurvivalJava">
+
+        <!-- Revert ScoreActivity to be a normal, non-launcher activity -->
+        <activity
+            android:name=".ScoreActivity"
+            android:exported="false" />
+
+        <!-- Restore the original Launcher activity -->
         <activity
             android:name=".AdminPanel"
             android:exported="false" />
@@ -28,7 +35,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
