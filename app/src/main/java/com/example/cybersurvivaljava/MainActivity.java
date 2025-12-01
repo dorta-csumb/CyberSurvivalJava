@@ -12,6 +12,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // TEMP: Jump straight to PuzzleActivity to verify it runs
-       startActivity(new Intent(this, PuzzleActivity.class));
+     //  startActivity(new Intent(this, PuzzleActivity.class));
     }
 }
