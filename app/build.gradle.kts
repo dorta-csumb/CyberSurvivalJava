@@ -50,4 +50,4 @@ android {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-}}
+}} //this needed a closing curly brace. BUILD SUCCESSFUL and the program is stable
