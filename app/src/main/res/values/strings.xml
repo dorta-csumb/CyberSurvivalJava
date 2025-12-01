@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">CyberSurvivalJava</string>
     <string name="chances_remaining">Chances Remaining: %d</string>
+    <string name="loginWelcome">Welcome to CyberSurvival. Please Sign in or Create New Account</string>
+    <string name="preference_file_key">jesuslopezPreferenceFileNameCyberSurvival</string>
+    <string name="preference_userId_key">jesuslopezPreferenceUserIdKeyCyberSurvival</string>
+    <string name="cybersurvival">CyberSurvival</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_your_account">Create Your Account</string>
+    <string name="retype_password">Retype Password</string>
+    <string name="admin_panel">Admin Panel</string>
+    <string name="logout">Logout</string>
+    <string name="circuitry">Circuitry</string>
+    <string name="cybersecurity">CyberSecurity</string>
+    <string name="programming">Programming</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancel</string>
+    <string name="register_new_admin_profile">Register New Admin Profile</string>
 </resources>
