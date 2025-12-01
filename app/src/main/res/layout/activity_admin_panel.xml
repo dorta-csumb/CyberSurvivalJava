@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminPanel">
+
+    <TextView
+        android:id="@+id/adminTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/adminPanelNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:gravity="end"
+        android:text="MYNAME"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/adminTopBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Container for the main buttons -->
+    <LinearLayout
+        android:id="@+id/admin_button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="150dp"
+        app:layout_constraintTop_toBottomOf="@id/adminPanelNameTextView" >
+
+        <Button
+            android:id="@+id/newAdminButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="New Admin"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/newQuestionButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="4dp"
+            android:text="New Question"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/deleteQuestionButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="4dp"
+            android:text="Delete Question"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/statisticsButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="4dp"
+            android:text="Statistics"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="4dp"
+            android:text="Back"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <!-- Container where Fragments will be placed -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone" 
+        app:layout_constraintTop_toBottomOf="@id/adminTopBar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
