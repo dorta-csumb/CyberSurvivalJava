@@ -52,7 +52,6 @@ public class AdminPanel extends AppCompatActivity {
         });
 
         binding.newAdminButton.setOnClickListener(v -> {
-            // Just perform the transaction. The listener will handle the UI changes.
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_view, new NewAdmin())
                     .addToBackStack(null)
@@ -62,6 +61,13 @@ public class AdminPanel extends AppCompatActivity {
         binding.newQuestionButton.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_view, new NewQuestionFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        binding.deleteQuestionButton.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_view, new DeleteQuestionFragment())
                     .addToBackStack(null)
                     .commit();
         });
