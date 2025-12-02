@@ -59,6 +59,13 @@ public class AdminPanel extends AppCompatActivity {
                     .commit();
         });
 
+        binding.newQuestionButton.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_view, new NewQuestionFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         binding.backButton.setOnClickListener(v -> {
             finish();
         });
