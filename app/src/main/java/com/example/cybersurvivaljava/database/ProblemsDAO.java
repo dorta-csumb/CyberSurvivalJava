@@ -2,6 +2,7 @@ package com.example.cybersurvivaljava.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -23,4 +24,12 @@ public interface ProblemsDAO {
     @Query("SELECT * FROM " + CyberSurvivalDatabase.PROBLEMS_TABLE_NAME + " WHERE category = :categoryId")
     LiveData<List<Problems>> getProblemsByCategory(int categoryId);
 
+    @Delete
+    void delete(Problems problem);
+
+    @Query("SELECT * FROM " + CyberSurvivalDatabase.PROBLEMS_TABLE_NAME + " ORDER BY problemName ASC")
+    LiveData<List<Problems>> getAllProblems();
+
+    @Query("SELECT COUNT(*) FROM " + CyberSurvivalDatabase.PROBLEMS_TABLE_NAME)
+    int count();
 }
