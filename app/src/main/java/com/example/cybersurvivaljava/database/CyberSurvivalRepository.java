@@ -72,4 +72,9 @@ public class CyberSurvivalRepository {
     public LiveData<User> getUserById(int userId) {
         return userDAO.getUserById(userId);
     }
+
+
+    public Problems getRandomProblemByCategory(int category) {
+        return problemsDAO.getRandomProblemByCategory(category);
+    }
 }
