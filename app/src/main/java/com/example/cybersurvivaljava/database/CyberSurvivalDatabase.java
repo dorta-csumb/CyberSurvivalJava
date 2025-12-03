@@ -50,14 +50,59 @@ public abstract class CyberSurvivalDatabase extends RoomDatabase {
             super.onCreate(db);
             Log.i("CyberSurvivalDatabase", "DB CREATED - Seeding initial users.");
             databaseWriteExecutor.execute(() -> {
-                UserDAO dao = INSTANCE.userDAO();
-                dao.deleteAll();
+                UserDAO userDAO = INSTANCE.userDAO();
+                userDAO.deleteAll();
                 User admin = new User("admin2", "admin2");
                 admin.setAdmin(true);
-                dao.insert(admin);
+                userDAO.insert(admin);
 
                 User testUser1 = new User("testuser1", "testuser1");
-                dao.insert(testUser1);
+                userDAO.insert(testUser1);
+
+                ProblemsDAO problemsDAO = INSTANCE.problemsDAO();
+                Problems networkingProblem = new Problems(
+                        Problems.CATEGORY_NETWORKING,
+                        "Signal Check",
+                        "The backup generators have restored power, but the network status is critical. You need to verify if this terminal can reach the campus emergency server at 192.168.1.1. Which command tests connectivity?",
+                        "ping 192.168.1.1",
+                        "ipconfig /all",
+                        "tracert -d",
+                        "rm -rf /network"
+                );
+                problemsDAO.insert(networkingProblem);
+
+                Problems programmingProblem = new Problems(
+                        Problems.CATEGORY_PROGRAMMING,
+                        "Turret Script",
+                        "You need to patch the automated turret's targeting script. It needs to keep firing as long as zombies are detected. Which loop is best?",
+                        "while(zombies > 0)",
+                        "if(zombies > 0)",
+                        "for(i=0; i<1; i++)",
+                        "try / catch"
+                );
+                problemsDAO.insert(programmingProblem);
+
+                Problems cybersecurityProblem = new Problems(
+                        Problems.CATEGORY_CYBERSECURITY,
+                        "Supply Crate Access",
+                        "You found a locked supply crate with a keypad. The hint says 'Standard Admin Privileges'. Which command usually grants superuser access on Linux systems?",
+                        "sudo",
+                        "admin",
+                        "unlock",
+                        "root -access"
+                );
+                problemsDAO.insert(cybersecurityProblem);
+
+                Problems circuitryProblem = new Problems(
+                        Problems.CATEGORY_CIRCUITRY,
+                        "Radio Repair",
+                        "The radio transmitter is dead. You found a blown component labeled 'R1'. What component restricts the flow of current and likely needs replacing?",
+                        "Resistor",
+                        "Capacitor",
+                        "LED",
+                        "Inductor"
+                );
+                problemsDAO.insert(circuitryProblem);
             });
         }
 

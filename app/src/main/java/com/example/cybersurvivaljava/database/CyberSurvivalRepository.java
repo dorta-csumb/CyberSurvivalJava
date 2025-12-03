@@ -64,4 +64,13 @@ public class CyberSurvivalRepository {
     public void insertUserProblem(UserProblems userProblem) {
         CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> userProblemsDAO.insert(userProblem));
     }
+
+
+    public Problems getRandomProblemByCategory(int category) {
+        return problemsDAO.getRandomProblemByCategory(category);
+    }
+
+    public LiveData<List<Problems>> getProblemsByCategory(int categoryId) {
+        return problemsDAO.getProblemsByCategory(categoryId);
+    }
 }

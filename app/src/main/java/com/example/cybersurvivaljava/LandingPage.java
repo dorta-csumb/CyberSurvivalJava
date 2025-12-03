@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cybersurvivaljava.database.CyberSurvivalRepository;
+import com.example.cybersurvivaljava.database.entities.Problems;
 import com.example.cybersurvivaljava.databinding.ActivityLandingPageBinding;
 
 public class LandingPage extends AppCompatActivity {
@@ -43,6 +44,22 @@ public class LandingPage extends AppCompatActivity {
                     binding.adminButton.setVisibility(View.GONE);
                 }
             }
+        });
+
+        binding.programmingButton.setOnClickListener(v -> {
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_PROGRAMMING, loggedInUserId));
+        });
+
+        binding.cybersecurityButton.setOnClickListener(v -> {
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_CYBERSECURITY, loggedInUserId));
+        });
+
+        binding.circuitryButton.setOnClickListener(v -> {
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_CIRCUITRY, loggedInUserId));
+        });
+
+        binding.networkingButton.setOnClickListener(v -> {
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_NETWORKING, loggedInUserId));
         });
 
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
