@@ -48,7 +48,7 @@ public abstract class CyberSurvivalDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            Log.i("CyberSurvivalDatabase", "DB CREATED");
+            Log.i("CyberSurvivalDatabase", "DB CREATED - Seeding initial users.");
             databaseWriteExecutor.execute(() -> {
                 UserDAO dao = INSTANCE.userDAO();
                 dao.deleteAll();
@@ -58,6 +58,20 @@ public abstract class CyberSurvivalDatabase extends RoomDatabase {
 
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
+            });
+        }
+
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            Log.i("CyberSurvivalDatabase", "DB OPENED - Checking for problems data.");
+            databaseWriteExecutor.execute(() -> {
+                ProblemsDAO dao = INSTANCE.problemsDAO();
+                if (dao.count() == 0) {
+                    Log.i("CyberSurvivalDatabase", "Problems table is empty, seeding data.");
+                    Problems problem1 = new Problems(2, "Phishing", "What is phishing?", "A fraudulent attempt to obtain sensitive information", "A type of fishing", "A computer virus", "A social media platform");
+                    dao.insert(problem1);
+                }
             });
         }
     };
