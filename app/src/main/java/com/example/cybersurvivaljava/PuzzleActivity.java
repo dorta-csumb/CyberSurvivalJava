@@ -13,9 +13,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cybersurvivaljava.database.CyberSurvivalRepository;
+import com.example.cybersurvivaljava.database.entities.Problems;
+
 import java.util.Locale;
 
 public class PuzzleActivity extends AppCompatActivity {
+    // Data
+    private CyberSurvivalRepository repository;
+    private Problems currentProblem;
 
     // Timer
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
@@ -50,20 +56,24 @@ public class PuzzleActivity extends AppCompatActivity {
         btnC = findViewById(R.id.btnC);
         btnD = findViewById(R.id.btnD);
 
-        // Temporary stub question (replace later with DB)
+        // 🚫 No repository / DB usage for now
+        // repository = CyberSurvivalRepository.getInstance(getApplication());
+        // int category = 1;
+        // currentProblem = repository.getRandomProblemByCategory(category);
+
+        // ✅ Hard-coded stub question
         final String prompt = "You find a locked terminal. Which command lists files in the current directory?";
         final String optA_text = "A) cd ..";
         final String optB_text = "B) ls";
         final String optC_text = "C) mkdir";
         final String optD_text = "D) rm -rf /";
 
-
-        // Seed UI
         tvQuestion.setText(prompt);
         btnA.setText(optA_text);
         btnB.setText(optB_text);
         btnC.setText(optC_text);
         btnD.setText(optD_text);
+
         updateChances();
 
         // SoundPool setup
@@ -98,6 +108,7 @@ public class PuzzleActivity extends AppCompatActivity {
             handleAnswer('D', v);
         });
     }
+
 
     @Override
     protected void onResume() {

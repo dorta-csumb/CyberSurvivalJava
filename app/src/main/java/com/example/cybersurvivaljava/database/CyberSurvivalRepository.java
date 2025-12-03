@@ -45,6 +45,13 @@ public class CyberSurvivalRepository {
             Log.d("CyberSurvivalRepository", "Error getting repository");
         }
         return null;
+
+
+    }
+    // keeps avoid race condition (above) and giving the class another public name
+    // (via the method below)
+    public static CyberSurvivalRepository getInstance(Application application) {
+        return getRepository(application);
     }
 
     public void insertUser(User user) {
@@ -71,5 +78,10 @@ public class CyberSurvivalRepository {
 
     public LiveData<User> getUserById(int userId) {
         return userDAO.getUserById(userId);
+    }
+
+
+    public Problems getRandomProblemByCategory(int category) {
+        return problemsDAO.getRandomProblemByCategory(category);
     }
 }
