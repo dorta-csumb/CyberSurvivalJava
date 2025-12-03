@@ -185,6 +185,8 @@ public class PuzzleActivity extends AppCompatActivity {
             Toast.makeText(this, "Correct! ✅", Toast.LENGTH_SHORT).show();
             finish();
         } else {
+            UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), false);
+            repository.insertUserProblem(userProblem);
             chances--;
             updateChances();
             v.setEnabled(false);
@@ -193,8 +195,6 @@ public class PuzzleActivity extends AppCompatActivity {
             if (chances <= 0) {
                 answered = true;
                 disableAll();
-                UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), false);
-                repository.insertUserProblem(userProblem);
                 Toast.makeText(this, "Out of chances. ❌", Toast.LENGTH_SHORT).show();
                 finish();
             }
