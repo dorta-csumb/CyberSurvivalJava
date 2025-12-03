@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+// PuzzleActivity.java
 public class PuzzleActivity extends AppCompatActivity {
     // Data
     private CyberSurvivalRepository repository;
