@@ -1,5 +1,7 @@
 package com.example.cybersurvivaljava;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -25,6 +27,8 @@ public class PuzzleActivity extends AppCompatActivity {
     // View Binding
     private ActivityPuzzleBinding binding;
 
+    private static final String EXTRA_CATEGORY_ID = "com.example.cybersurvivaljava.CATEGORY_ID";
+
     // Timer
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
     private long startMs = 0L;
@@ -38,6 +42,11 @@ public class PuzzleActivity extends AppCompatActivity {
     private boolean answered = false;
     private final char correct = 'B';
 
+    public static Intent puzzleIntentFactory(Context context, int categoryId) {
+        Intent intent = new Intent(context, PuzzleActivity.class);
+        intent.putExtra(EXTRA_CATEGORY_ID, categoryId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
