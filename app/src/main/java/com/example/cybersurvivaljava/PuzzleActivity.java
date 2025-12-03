@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,7 +18,11 @@ import com.example.cybersurvivaljava.database.CyberSurvivalRepository;
 import com.example.cybersurvivaljava.database.entities.Problems;
 import com.example.cybersurvivaljava.databinding.ActivityPuzzleBinding;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class PuzzleActivity extends AppCompatActivity {
     // Data
@@ -40,7 +45,6 @@ public class PuzzleActivity extends AppCompatActivity {
 
     private int chances = 4;
     private boolean answered = false;
-    private final char correct = 'B';
 
     public static Intent puzzleIntentFactory(Context context, int categoryId) {
         Intent intent = new Intent(context, PuzzleActivity.class);
@@ -54,23 +58,18 @@ public class PuzzleActivity extends AppCompatActivity {
         binding = ActivityPuzzleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // 🚫 No repository / DB usage for now
-        // repository = CyberSurvivalRepository.getInstance(getApplication());
-        // int category = 1;
-        // currentProblem = repository.getRandomProblemByCategory(category);
+        repository = CyberSurvivalRepository.getRepository(getApplication());
+        int categoryId = getIntent().getIntExtra(EXTRA_CATEGORY_ID, 1);
 
-        // ✅ Hard-coded stub question
-        final String prompt = "You find a locked terminal. Which command lists files in the current directory?";
-        final String optA_text = "A) cd ..";
-        final String optB_text = "B) ls";
-        final String optC_text = "C) mkdir";
-        final String optD_text = "D) rm -rf /";
-
-        binding.tvQuestion.setText(prompt);
-        binding.btnA.setText(optA_text);
-        binding.btnB.setText(optB_text);
-        binding.btnC.setText(optC_text);
-        binding.btnD.setText(optD_text);
+        repository.getProblemsByCategory(categoryId).observe(this, problems -> {
+            if (problems != null && !problems.isEmpty()) {
+                currentProblem = problems.get(new Random().nextInt(problems.size()));
+                loadProblemUI(currentProblem);
+            } else {
+                Toast.makeText(this, "No problems found for this category.", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
 
         updateChances();
 
@@ -105,6 +104,20 @@ public class PuzzleActivity extends AppCompatActivity {
             playClick();
             handleAnswer('D', v);
         });
+    }
+
+    private void loadProblemUI(Problems p) {
+        binding.tvQuestion.setText(p.getProblemDescription());
+        List<String> answers = new ArrayList<>();
+        answers.add(p.getProblemSolution());
+        answers.add(p.getWrongSolution1());
+        answers.add(p.getWrongSolution2());
+        answers.add(p.getWrongSolution3());
+        Collections.shuffle(answers);
+        binding.btnA.setText(answers.get(0));
+        binding.btnB.setText(answers.get(1));
+        binding.btnC.setText(answers.get(2));
+        binding.btnD.setText(answers.get(3));
     }
 
 
@@ -156,9 +169,9 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
     private void handleAnswer(char selected, View v) {
-        if (answered) return;
+        if (answered || currentProblem == null) return;
 
-        boolean isCorrect = (selected == correct);
+        boolean isCorrect = ((Button)v).getText().toString().equals(currentProblem.getProblemSolution());
         if (isCorrect) {
             answered = true;
             disableAll();
