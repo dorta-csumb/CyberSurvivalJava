@@ -15,7 +15,7 @@ public class UserProblems {
     private int problemId;
     boolean isCorrect;
 
-    UserProblems(int userId, int problemId, boolean isCorrect){
+    public UserProblems(int userId, int problemId, boolean isCorrect){
         this.userId = userId;
         this.problemId = problemId;
         this.isCorrect = isCorrect;

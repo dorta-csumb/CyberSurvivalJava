@@ -47,19 +47,19 @@ public class LandingPage extends AppCompatActivity {
         });
 
         binding.programmingButton.setOnClickListener(v -> {
-            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_PROGRAMMING));
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_PROGRAMMING, loggedInUserId));
         });
 
         binding.cybersecurityButton.setOnClickListener(v -> {
-            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_CYBERSECURITY));
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_CYBERSECURITY, loggedInUserId));
         });
 
         binding.circuitryButton.setOnClickListener(v -> {
-            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_CIRCUITRY));
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_CIRCUITRY, loggedInUserId));
         });
 
         binding.networkingButton.setOnClickListener(v -> {
-            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_NETWORKING));
+            startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_NETWORKING, loggedInUserId));
         });
 
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {

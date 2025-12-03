@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cybersurvivaljava.database.CyberSurvivalRepository;
 import com.example.cybersurvivaljava.database.entities.Problems;
+import com.example.cybersurvivaljava.database.entities.UserProblems;
 import com.example.cybersurvivaljava.databinding.ActivityPuzzleBinding;
 
 import java.util.ArrayList;
@@ -24,16 +25,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-// PuzzleActivity.java
 public class PuzzleActivity extends AppCompatActivity {
     // Data
     private CyberSurvivalRepository repository;
     private Problems currentProblem;
+    private int currentUserId;
 
     // View Binding
     private ActivityPuzzleBinding binding;
 
     private static final String EXTRA_CATEGORY_ID = "com.example.cybersurvivaljava.CATEGORY_ID";
+    private static final String EXTRA_USER_ID = "com.example.cybersurvivaljava.USER_ID";
 
     // Timer
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
@@ -47,9 +49,10 @@ public class PuzzleActivity extends AppCompatActivity {
     private int chances = 4;
     private boolean answered = false;
 
-    public static Intent puzzleIntentFactory(Context context, int categoryId) {
+    public static Intent puzzleIntentFactory(Context context, int categoryId, int userId) {
         Intent intent = new Intent(context, PuzzleActivity.class);
         intent.putExtra(EXTRA_CATEGORY_ID, categoryId);
+        intent.putExtra(EXTRA_USER_ID, userId);
         return intent;
     }
 
@@ -61,6 +64,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
         repository = CyberSurvivalRepository.getRepository(getApplication());
         int categoryId = getIntent().getIntExtra(EXTRA_CATEGORY_ID, 1);
+        currentUserId = getIntent().getIntExtra(EXTRA_USER_ID, -1);
 
         repository.getProblemsByCategory(categoryId).observe(this, problems -> {
             if (problems != null && !problems.isEmpty()) {
@@ -91,19 +95,19 @@ public class PuzzleActivity extends AppCompatActivity {
         // Click listeners with SFX
         binding.btnA.setOnClickListener(v -> {
             playClick();
-            handleAnswer('A', v);
+            handleAnswer(v);
         });
         binding.btnB.setOnClickListener(v -> {
             playClick();
-            handleAnswer('B', v);
+            handleAnswer(v);
         });
         binding.btnC.setOnClickListener(v -> {
             playClick();
-            handleAnswer('C', v);
+            handleAnswer(v);
         });
         binding.btnD.setOnClickListener(v -> {
             playClick();
-            handleAnswer('D', v);
+            handleAnswer(v);
         });
     }
 
@@ -169,15 +173,17 @@ public class PuzzleActivity extends AppCompatActivity {
         }
     }
 
-    private void handleAnswer(char selected, View v) {
+    private void handleAnswer(View v) {
         if (answered || currentProblem == null) return;
 
         boolean isCorrect = ((Button)v).getText().toString().equals(currentProblem.getProblemSolution());
         if (isCorrect) {
             answered = true;
             disableAll();
+            UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), true);
+            repository.insertUserProblem(userProblem);
             Toast.makeText(this, "Correct! ✅", Toast.LENGTH_SHORT).show();
-            // TODO: log success and navigate
+            finish();
         } else {
             chances--;
             updateChances();
@@ -187,8 +193,10 @@ public class PuzzleActivity extends AppCompatActivity {
             if (chances <= 0) {
                 answered = true;
                 disableAll();
+                UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), false);
+                repository.insertUserProblem(userProblem);
                 Toast.makeText(this, "Out of chances. ❌", Toast.LENGTH_SHORT).show();
-                // TODO: log failure and navigate
+                finish();
             }
         }
     }
