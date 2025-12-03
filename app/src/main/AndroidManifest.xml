@@ -43,7 +43,7 @@
         <!-- PUZZLE (no launcher) -->
         <activity
             android:name=".PuzzleActivity"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>
