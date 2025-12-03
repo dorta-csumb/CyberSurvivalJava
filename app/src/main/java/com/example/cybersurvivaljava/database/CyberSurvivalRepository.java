@@ -9,6 +9,7 @@ import com.example.cybersurvivaljava.database.entities.Problems;
 import com.example.cybersurvivaljava.database.entities.User;
 import com.example.cybersurvivaljava.database.entities.UserProblems;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -83,5 +84,9 @@ public class CyberSurvivalRepository {
 
     public Problems getRandomProblemByCategory(int category) {
         return problemsDAO.getRandomProblemByCategory(category);
+    }
+
+    public LiveData<List<Problems>> getProblemsByCategory(int categoryId) {
+        return problemsDAO.getProblemsByCategory(categoryId);
     }
 }
