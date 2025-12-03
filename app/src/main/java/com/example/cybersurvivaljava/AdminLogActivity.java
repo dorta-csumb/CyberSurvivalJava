@@ -1,9 +1,13 @@
-package com.example.cybersurvivaladminpage;
+package com.example.demoapplicationbuild;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -19,11 +23,25 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdminLogActivity extends AppCompatActivity {
 
+    // ---- Temporary dummy player data (replace with real LiveData later) ----
+    private String userName = "Agent Nova";
+    private int totalAccuracy = 87;      // 0..100 (%)
+    private long totalSpeed = 5234L;     // seconds
+    private int tasksCompleted = 31;
+
     private RecyclerView recyclerView;
     private TextView emptyView;
+
+    // Header views
+    private TextView textUserName;
+    private TextView textTotalAccuracy;
+    private TextView textTotalSpeed;
+    private TextView textTasksCompleted;
+    private Button buttonHighScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +55,49 @@ public class AdminLogActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Bind header
+        textUserName = findViewById(R.id.text_user_name);
+        textTotalAccuracy = findViewById(R.id.text_total_accuracy);
+        textTotalSpeed = findViewById(R.id.text_total_speed);
+        textTasksCompleted = findViewById(R.id.text_tasks_completed);
+        buttonHighScores = findViewById(R.id.button_high_scores);
+
+        // Render dummy values
+        renderPlayerHeader();
+
+        // Navigate to High Score screen (placeholder Activity)
+        buttonHighScores.setOnClickListener(v ->
+                startActivity(new Intent(this, HighScoreActivity.class))
+        );
+
+        // Recycler
         recyclerView = findViewById(R.id.recycler_admin_log);
         emptyView = findViewById(R.id.text_empty);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Dummy data for now — replace with LiveData from DB later
         List<AdminLogEntry> dummy = createDummyLogs();
-        AdminLogAdapter adapter = new AdminLogAdapter(dummy);
-        recyclerView.setAdapter(adapter);
-
+        recyclerView.setAdapter(new AdminLogAdapter(dummy));
         toggleEmpty(dummy.isEmpty());
+    }
+
+    private void renderPlayerHeader() {
+        textUserName.setText("Agent: " + userName);
+        textTotalAccuracy.setText(String.format(Locale.US, "Accuracy: %d%%", totalAccuracy));
+
+        // Show seconds and a friendlier duration
+        String human = toHumanDuration(totalSpeed);
+        textTotalSpeed.setText(String.format(Locale.US, "Speed: %,d s (%s)", totalSpeed, human));
+
+        textTasksCompleted.setText(String.format(Locale.US, "Tasks: %d", tasksCompleted));
+    }
+
+    private String toHumanDuration(long seconds) {
+        long h = seconds / 3600;
+        long m = (seconds % 3600) / 60;
+        long s = seconds % 60;
+        if (h > 0) return String.format(Locale.US, "%dh %dm %ds", h, m, s);
+        if (m > 0) return String.format(Locale.US, "%dm %ds", m, s);
+        return String.format(Locale.US, "%ds", s);
     }
 
     private void toggleEmpty(boolean isEmpty) {
@@ -65,12 +115,11 @@ public class AdminLogActivity extends AppCompatActivity {
         return list;
     }
 
-    // --- Simple data model for now ---
+    // --- simple model ---
     static class AdminLogEntry {
         final String title;
         final String detail;
         final long timestamp;
-
         AdminLogEntry(String title, String detail, long timestamp) {
             this.title = title;
             this.detail = detail;
@@ -78,14 +127,11 @@ public class AdminLogActivity extends AppCompatActivity {
         }
     }
 
-    // --- Minimal adapter using android.R.layout.simple_list_item_2 ---
+    // --- minimal adapter using android.R.layout.simple_list_item_2 ---
     static class AdminLogAdapter extends RecyclerView.Adapter<AdminLogAdapter.VH> {
         private final List<AdminLogEntry> items;
-        private final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
-
-        AdminLogAdapter(List<AdminLogEntry> items) {
-            this.items = items;
-        }
+        private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+        AdminLogAdapter(List<AdminLogEntry> items) { this.items = items; }
 
         @NonNull @Override
         public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -95,15 +141,13 @@ public class AdminLogActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull VH holder, int position) {
-            AdminLogEntry e = items.get(position);
-            String when = dateFormat.format(new Date(e.timestamp));
-            holder.title.setText(e.title);
-            holder.subtitle.setText(e.detail + " • " + when);
+        public void onBindViewHolder(@NonNull VH h, int pos) {
+            AdminLogEntry e = items.get(pos);
+            h.title.setText(e.title);
+            h.subtitle.setText(e.detail + " • " + df.format(new Date(e.timestamp)));
         }
 
-        @Override
-        public int getItemCount() { return items.size(); }
+        @Override public int getItemCount() { return items.size(); }
 
         static class VH extends RecyclerView.ViewHolder {
             TextView title, subtitle;
