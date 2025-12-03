@@ -50,14 +50,26 @@ public abstract class CyberSurvivalDatabase extends RoomDatabase {
             super.onCreate(db);
             Log.i("CyberSurvivalDatabase", "DB CREATED");
             databaseWriteExecutor.execute(() -> {
-                UserDAO dao = INSTANCE.userDAO();
-                dao.deleteAll();
+                UserDAO userDAO = INSTANCE.userDAO();
+                userDAO.deleteAll();
                 User admin = new User("admin2", "admin2");
                 admin.setAdmin(true);
-                dao.insert(admin);
+                userDAO.insert(admin);
 
                 User testUser1 = new User("testuser1", "testuser1");
-                dao.insert(testUser1);
+                userDAO.insert(testUser1);
+
+                ProblemsDAO problemsDAO = INSTANCE.problemsDAO();
+                Problems networkingProblem = new Problems(
+                        Problems.CATEGORY_NETWORKING,
+                        "Signal Check",
+                        "The backup generators have restored power, but the network status is critical. You need to verify if this terminal can reach the campus emergency server at 192.168.1.1. Which command tests connectivity?",
+                        "ping 192.168.1.1",
+                        "ipconfig /all",
+                        "tracert -d",
+                        "rm -rf /network"
+                );
+                problemsDAO.insert(networkingProblem);
             });
         }
     };
