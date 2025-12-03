@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -15,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cybersurvivaljava.database.CyberSurvivalRepository;
 import com.example.cybersurvivaljava.database.entities.Problems;
+import com.example.cybersurvivaljava.databinding.ActivityPuzzleBinding;
 
 import java.util.Locale;
 
@@ -23,19 +22,17 @@ public class PuzzleActivity extends AppCompatActivity {
     private CyberSurvivalRepository repository;
     private Problems currentProblem;
 
+    // View Binding
+    private ActivityPuzzleBinding binding;
+
     // Timer
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
     private long startMs = 0L;
     private boolean timerRunning = false;
 
-    // UI
-    private TextView tvTimer, tvChances;
-    private Button btnA, btnB, btnC, btnD;
-
     // Sound effect
     private SoundPool soundPool;
     private int soundClick;
-
 
     private int chances = 4;
     private boolean answered = false;
@@ -45,16 +42,8 @@ public class PuzzleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_puzzle);
-
-        // Find views
-        tvTimer = findViewById(R.id.tvTimer);
-        tvChances = findViewById(R.id.tvChances);
-        TextView tvQuestion = findViewById(R.id.tvQuestion);
-        btnA = findViewById(R.id.btnA);
-        btnB = findViewById(R.id.btnB);
-        btnC = findViewById(R.id.btnC);
-        btnD = findViewById(R.id.btnD);
+        binding = ActivityPuzzleBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // 🚫 No repository / DB usage for now
         // repository = CyberSurvivalRepository.getInstance(getApplication());
@@ -68,11 +57,11 @@ public class PuzzleActivity extends AppCompatActivity {
         final String optC_text = "C) mkdir";
         final String optD_text = "D) rm -rf /";
 
-        tvQuestion.setText(prompt);
-        btnA.setText(optA_text);
-        btnB.setText(optB_text);
-        btnC.setText(optC_text);
-        btnD.setText(optD_text);
+        binding.tvQuestion.setText(prompt);
+        binding.btnA.setText(optA_text);
+        binding.btnB.setText(optB_text);
+        binding.btnC.setText(optC_text);
+        binding.btnD.setText(optD_text);
 
         updateChances();
 
@@ -91,19 +80,19 @@ public class PuzzleActivity extends AppCompatActivity {
         soundClick = soundPool.load(this, R.raw.clickclack, 1);
 
         // Click listeners with SFX
-        btnA.setOnClickListener(v -> {
+        binding.btnA.setOnClickListener(v -> {
             playClick();
             handleAnswer('A', v);
         });
-        btnB.setOnClickListener(v -> {
+        binding.btnB.setOnClickListener(v -> {
             playClick();
             handleAnswer('B', v);
         });
-        btnC.setOnClickListener(v -> {
+        binding.btnC.setOnClickListener(v -> {
             playClick();
             handleAnswer('C', v);
         });
-        btnD.setOnClickListener(v -> {
+        binding.btnD.setOnClickListener(v -> {
             playClick();
             handleAnswer('D', v);
         });
@@ -131,7 +120,7 @@ public class PuzzleActivity extends AppCompatActivity {
             int mins = secs / 60;
             secs = secs % 60;
 
-            tvTimer.setText(String.format(Locale.US, "Time: %02d:%02d", mins, secs));
+            binding.tvTimer.setText(String.format(Locale.US, "Time: %02d:%02d", mins, secs));
 
             if (timerRunning) {
                 timerHandler.postDelayed(this, 1000);
@@ -182,14 +171,14 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
     private void updateChances() {
-        tvChances.setText("Chances Remaining: " + chances);
+        binding.tvChances.setText("Chances Remaining: " + chances);
     }
 
     private void disableAll() {
-        btnA.setEnabled(false);
-        btnB.setEnabled(false);
-        btnC.setEnabled(false);
-        btnD.setEnabled(false);
+        binding.btnA.setEnabled(false);
+        binding.btnB.setEnabled(false);
+        binding.btnC.setEnabled(false);
+        binding.btnD.setEnabled(false);
         stopStopwatch();
     }
 
