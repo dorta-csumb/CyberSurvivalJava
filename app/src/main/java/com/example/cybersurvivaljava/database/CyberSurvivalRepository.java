@@ -1,24 +1,20 @@
 package com.example.cybersurvivaljava.database;
 
 import android.app.Application;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 
 import com.example.cybersurvivaljava.database.entities.Problems;
 import com.example.cybersurvivaljava.database.entities.User;
 import com.example.cybersurvivaljava.database.entities.UserProblems;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.List;
 
 public class CyberSurvivalRepository {
     private final UserDAO userDAO;
     private final ProblemsDAO problemsDAO;
     private final UserProblemsDAO userProblemsDAO;
 
-    private static CyberSurvivalRepository repository;
+    private static volatile CyberSurvivalRepository repository;
 
     private CyberSurvivalRepository(Application application) {
         CyberSurvivalDatabase db = CyberSurvivalDatabase.getDatabase(application);
@@ -28,41 +24,19 @@ public class CyberSurvivalRepository {
     }
 
     public static CyberSurvivalRepository getRepository(Application application) {
-        if (repository != null) {
-            return repository;
-        }
-        Future<CyberSurvivalRepository> future = CyberSurvivalDatabase.databaseWriteExecutor.submit(
-                new Callable<CyberSurvivalRepository>() {
-                    @Override
-                    public CyberSurvivalRepository call() throws Exception {
-                        return new CyberSurvivalRepository(application);
-                    }
+        if (repository == null) {
+            synchronized (CyberSurvivalRepository.class) {
+                if (repository == null) {
+                    repository = new CyberSurvivalRepository(application);
                 }
-        );
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.d("CyberSurvivalRepository", "Error getting repository");
+            }
         }
-        return null;
+        return repository;
     }
 
+    // User Methods
     public void insertUser(User user) {
-        CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.insert(user);
-        });
-    }
-
-    public void insertProblem(Problems problem) {
-        CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> {
-            problemsDAO.insert(problem);
-        });
-    }
-
-    public void insertUserProblem(UserProblems userProblem) {
-        CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> {
-            userProblemsDAO.insert(userProblem);
-        });
+        CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> userDAO.insert(user));
     }
 
     public LiveData<User> getUserByUsername(String username) {
@@ -71,5 +45,32 @@ public class CyberSurvivalRepository {
 
     public LiveData<User> getUserById(int userId) {
         return userDAO.getUserById(userId);
+    }
+
+    // Problems Methods
+    public void insertProblem(Problems problem) {
+        CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> problemsDAO.insert(problem));
+    }
+
+    public void deleteProblem(Problems problem) {
+        CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> problemsDAO.delete(problem));
+    }
+
+    public LiveData<List<Problems>> getAllProblems() {
+        return problemsDAO.getAllProblems();
+    }
+
+    // UserProblems Methods
+    public void insertUserProblem(UserProblems userProblem) {
+        CyberSurvivalDatabase.databaseWriteExecutor.execute(() -> userProblemsDAO.insert(userProblem));
+    }
+
+
+    public Problems getRandomProblemByCategory(int category) {
+        return problemsDAO.getRandomProblemByCategory(category);
+    }
+
+    public LiveData<List<Problems>> getProblemsByCategory(int categoryId) {
+        return problemsDAO.getProblemsByCategory(categoryId);
     }
 }

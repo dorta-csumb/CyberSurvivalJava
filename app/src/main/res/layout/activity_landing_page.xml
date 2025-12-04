@@ -61,6 +61,17 @@
         app:layout_constraintTop_toBottomOf="@id/cybersecurityButton" />
 
     <Button
+        android:id="@+id/networkingButton"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="4dp"
+        android:text="Networking"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circuitryButton" />
+
+    <Button
         android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="75dp"
@@ -69,7 +80,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/circuitryButton" />
+        app:layout_constraintTop_toBottomOf="@id/networkingButton" />
 
     <Button
         android:id="@+id/adminButton"

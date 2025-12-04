@@ -25,21 +25,23 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         viewBinding = true
     }
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.recyclerview) //added Score Activity recycler view
     implementation("androidx.room:room-runtime:2.8.3")
     annotationProcessor("androidx.room:room-compiler:2.8.3")
     testImplementation(libs.junit)

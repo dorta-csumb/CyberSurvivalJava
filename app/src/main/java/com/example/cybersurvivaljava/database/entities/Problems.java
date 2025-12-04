@@ -9,6 +9,11 @@ import java.util.Objects;
 
 @Entity(tableName = CyberSurvivalDatabase.PROBLEMS_TABLE_NAME)
 public class Problems {
+    public static final int CATEGORY_PROGRAMMING = 1;
+    public static final int CATEGORY_CYBERSECURITY = 2;
+    public static final int CATEGORY_CIRCUITRY = 3;
+    public static final int CATEGORY_NETWORKING = 4;
+
     @PrimaryKey(autoGenerate = true)
     private int problemId;
     private int category;
