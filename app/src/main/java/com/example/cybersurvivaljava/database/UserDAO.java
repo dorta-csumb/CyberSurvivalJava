@@ -9,10 +9,12 @@ import androidx.room.Query;
 
 import com.example.cybersurvivaljava.database.entities.User;
 
+import java.util.List;
+
 @Dao
 public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(User... user);
+    long insert(User user);
 
     @Delete
     void delete(User user);
@@ -25,4 +27,8 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + CyberSurvivalDatabase.USER_TABLE_NAME + " WHERE userId == :userId")
     LiveData<User> getUserById(int userId);
+
+    // Method for testing purposes
+    @Query("SELECT * FROM " + CyberSurvivalDatabase.USER_TABLE_NAME + " WHERE username == :username")
+    User findUserByUsername_TEST(String username);
 }
