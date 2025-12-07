@@ -1,4 +1,4 @@
-package com.example.demoapplicationbuild;
+package com.example.cybersurvivaljava;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -16,22 +16,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.room.Room;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
+import com.example.cybersurvivaljava.database.CyberSurvivalDatabase;
+import com.example.cybersurvivaljava.database.ProblemsDAO;
+import com.example.cybersurvivaljava.database.UserDAO;
+import com.example.cybersurvivaljava.database.entities.Problems;
+import com.example.cybersurvivaljava.database.entities.User;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class AdminLogActivity extends AppCompatActivity {
 
-    // ---- Temporary dummy player data (replace with real LiveData later) ----
-    private String userName = "Agent Nova";
-    private int totalAccuracy = 87;      // 0..100 (%)
-    private long totalSpeed = 5234L;     // seconds
-    private int tasksCompleted = 31;
+    // Database / DAO references
+    private CyberSurvivalDatabase database;
+    private UserDAO userDao;
+    private ProblemsDAO problemsDao;
 
     private RecyclerView recyclerView;
     private TextView emptyView;
@@ -55,19 +61,25 @@ public class AdminLogActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Bind header
+        // Build Room database and DAO references
+        database = Room.databaseBuilder(
+                getApplicationContext(),
+                CyberSurvivalDatabase.class,
+                "CyberSurvivalDatabase"
+        ).allowMainThreadQueries().build();
+        userDao = database.userDAO();
+        problemsDao = database.problemsDAO();
+
+        // Bind header views
         textUserName = findViewById(R.id.text_user_name);
         textTotalAccuracy = findViewById(R.id.text_total_accuracy);
         textTotalSpeed = findViewById(R.id.text_total_speed);
         textTasksCompleted = findViewById(R.id.text_tasks_completed);
         buttonHighScores = findViewById(R.id.button_high_scores);
 
-        // Render dummy values
-        renderPlayerHeader();
-
         // Navigate to High Score screen (placeholder Activity)
         buttonHighScores.setOnClickListener(v ->
-                startActivity(new Intent(this, HighScoreActivity.class))
+                startActivity(new Intent(this, HighScoreAdapter.class))
         );
 
         // Recycler
@@ -75,29 +87,59 @@ public class AdminLogActivity extends AppCompatActivity {
         emptyView = findViewById(R.id.text_empty);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<AdminLogEntry> dummy = createDummyLogs();
-        recyclerView.setAdapter(new AdminLogAdapter(dummy));
-        toggleEmpty(dummy.isEmpty());
+        final AdminLogAdapter adapter = new AdminLogAdapter();
+        recyclerView.setAdapter(adapter);
+        toggleEmpty(true);
+
+        // Determine which user to show in the header. Default to userId = 1
+        int userId = getIntent().getIntExtra("userId", 1);
+        LiveData<User> userLiveData = userDao.getUserById(userId);
+        userLiveData.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if (user != null) {
+                    renderPlayerHeader(user);
+                }
+            }
+        });
+
+        // Populate the admin log list from the problems table
+        problemsDao.getAllProblems().observe(this, new Observer<List<Problems>>() {
+            @Override
+            public void onChanged(List<Problems> problems) {
+                List<AdminLogEntry> entries = new ArrayList<>();
+                if (problems != null) {
+                    for (Problems p : problems) {
+                        String title = "Problem: " + p.getProblemName();
+                        String detail = p.getProblemDescription();
+                        entries.add(new AdminLogEntry(title, detail));
+                    }
+                }
+                adapter.submitList(entries);
+                toggleEmpty(entries.isEmpty());
+            }
+        });
     }
 
-    private void renderPlayerHeader() {
-        textUserName.setText("Agent: " + userName);
-        textTotalAccuracy.setText(String.format(Locale.US, "Accuracy: %d%%", totalAccuracy));
+    private void renderPlayerHeader(@NonNull User user) {
+        textUserName.setText("Agent: " + user.getUsername());
 
-        // Show seconds and a friendlier duration
-        String human = toHumanDuration(totalSpeed);
-        textTotalSpeed.setText(String.format(Locale.US, "Speed: %,d s (%s)", totalSpeed, human));
+        int attempted = user.getUserProblemsAttempted();
+        int solved = user.getUserProblemsSolved();
 
-        textTasksCompleted.setText(String.format(Locale.US, "Tasks: %d", tasksCompleted));
-    }
+        int accuracy = 0;
+        if (attempted > 0) {
+            accuracy = (int) Math.round((solved * 100.0) / attempted);
+        }
+        textTotalAccuracy.setText(String.format(Locale.US, "Accuracy: %d%%", accuracy));
 
-    private String toHumanDuration(long seconds) {
-        long h = seconds / 3600;
-        long m = (seconds % 3600) / 60;
-        long s = seconds % 60;
-        if (h > 0) return String.format(Locale.US, "%dh %dm %ds", h, m, s);
-        if (m > 0) return String.format(Locale.US, "%dm %ds", m, s);
-        return String.format(Locale.US, "%ds", s);
+        // Show high-level progress instead of a fake "speed" metric
+        textTotalSpeed.setText(String.format(Locale.US,
+                "Problems: %d solved / %d attempted",
+                solved,
+                attempted));
+
+        textTasksCompleted.setText(String.format(Locale.US, "Tasks: %d", solved));
     }
 
     private void toggleEmpty(boolean isEmpty) {
@@ -105,35 +147,32 @@ public class AdminLogActivity extends AppCompatActivity {
         recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
 
-    private List<AdminLogEntry> createDummyLogs() {
-        List<AdminLogEntry> list = new ArrayList<>();
-        list.add(new AdminLogEntry("Player joined", "UID: 42 connected", System.currentTimeMillis() - 60_000));
-        list.add(new AdminLogEntry("Item crafted", "EMP Grenade x1", System.currentTimeMillis() - 45_000));
-        list.add(new AdminLogEntry("Zone entered", "Stealth Lab - Sector B", System.currentTimeMillis() - 30_000));
-        list.add(new AdminLogEntry("Challenge completed", "Silent Bypass (Rank A)", System.currentTimeMillis() - 15_000));
-        list.add(new AdminLogEntry("Player left", "UID: 42 disconnected", System.currentTimeMillis() - 5_000));
-        return list;
-    }
-
     // --- simple model ---
     static class AdminLogEntry {
         final String title;
         final String detail;
-        final long timestamp;
-        AdminLogEntry(String title, String detail, long timestamp) {
+
+        AdminLogEntry(String title, String detail) {
             this.title = title;
             this.detail = detail;
-            this.timestamp = timestamp;
         }
     }
 
     // --- minimal adapter using android.R.layout.simple_list_item_2 ---
     static class AdminLogAdapter extends RecyclerView.Adapter<AdminLogAdapter.VH> {
-        private final List<AdminLogEntry> items;
-        private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
-        AdminLogAdapter(List<AdminLogEntry> items) { this.items = items; }
+        private final List<AdminLogEntry> items = new ArrayList<>();
 
-        @NonNull @Override
+        AdminLogAdapter() {
+        }
+
+        void submitList(@NonNull List<AdminLogEntry> newItems) {
+            items.clear();
+            items.addAll(newItems);
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
         public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(android.R.layout.simple_list_item_2, parent, false);
@@ -144,13 +183,17 @@ public class AdminLogActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull VH h, int pos) {
             AdminLogEntry e = items.get(pos);
             h.title.setText(e.title);
-            h.subtitle.setText(e.detail + " • " + df.format(new Date(e.timestamp)));
+            h.subtitle.setText(e.detail);
         }
 
-        @Override public int getItemCount() { return items.size(); }
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
 
         static class VH extends RecyclerView.ViewHolder {
             TextView title, subtitle;
+
             VH(@NonNull View itemView) {
                 super(itemView);
                 title = itemView.findViewById(android.R.id.text1);
