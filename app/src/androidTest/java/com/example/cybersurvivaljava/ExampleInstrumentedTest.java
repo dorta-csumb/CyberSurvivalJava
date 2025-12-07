@@ -60,7 +60,6 @@ public class ExampleInstrumentedTest {
         assertNotNull(insertedUser);
 
         userDao.delete(insertedUser);
-
         User deletedUser = userDao.findUserByUsername_TEST("deleteMe");
         assertNull(deletedUser);
     }

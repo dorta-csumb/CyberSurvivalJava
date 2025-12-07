@@ -177,11 +177,14 @@ public class PuzzleActivity extends AppCompatActivity {
         if (answered || currentProblem == null) return;
 
         boolean isCorrect = ((Button)v).getText().toString().equals(currentProblem.getProblemSolution());
+
+        // Always record the attempt, right or wrong
+        UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), isCorrect);
+        repository.insertUserProblem(userProblem);
+
         if (isCorrect) {
             answered = true;
             disableAll();
-            UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), true);
-            repository.insertUserProblem(userProblem);
             Toast.makeText(this, "Correct! ✅", Toast.LENGTH_SHORT).show();
             finish();
         } else {
@@ -193,8 +196,6 @@ public class PuzzleActivity extends AppCompatActivity {
             if (chances <= 0) {
                 answered = true;
                 disableAll();
-                UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), false);
-                repository.insertUserProblem(userProblem);
                 Toast.makeText(this, "Out of chances. ❌", Toast.LENGTH_SHORT).show();
                 finish();
             }
