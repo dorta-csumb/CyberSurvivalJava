@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="profileRoot" type="id">ProfileRoot</item>
+    <item name="profileTopBar" type="id">ProfileTopBar</item>
+    <item name="profileUsernameTextView" type="id">ProfileUsernameTextView</item>
+    <item name="profileInfoLabel" type="id">ProfileInfoLabel</item>
+    <item name="profileEmailTitleTextView" type="id">ProfileEmailTitleTextView</item>
+    <item name="profileEmailTextView" type="id">ProfileEmailTextView</item>
+    <item name="profileRoleTitleTextView" type="id">ProfileRoleTitleTextView</item>
+    <item name="profileRoleTextView" type="id">ProfileRoleTextView</item>
+    <item name="profileJoinedTitleTextView" type="id">ProfileJoinedTitleTextView</item>
+    <item name="profileJoinedTextView" type="id">ProfileJoinedTextView</item>
+</resources>
