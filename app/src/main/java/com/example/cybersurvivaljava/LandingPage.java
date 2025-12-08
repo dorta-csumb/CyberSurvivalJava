@@ -62,6 +62,10 @@ public class LandingPage extends AppCompatActivity {
             startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_NETWORKING, loggedInUserId));
         });
 
+        binding.satelliteButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SatelliteActivity.class);
+            startActivity(intent);
+        });
         // Wiring up the High Scores Button
         binding.highScoresButton.setOnClickListener(v -> {
             Intent intent = new Intent(LandingPage.this, ScoreActivity.class);

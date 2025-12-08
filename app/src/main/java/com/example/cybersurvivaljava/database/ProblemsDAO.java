@@ -32,4 +32,7 @@ public interface ProblemsDAO {
 
     @Query("SELECT COUNT(*) FROM " + CyberSurvivalDatabase.PROBLEMS_TABLE_NAME)
     int count();
+
+    @Query("DELETE FROM " + CyberSurvivalDatabase.PROBLEMS_TABLE_NAME)
+    void deleteAll();
 }
