@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfilePage">
+
+    <!-- Top bar similar to LandingPage -->
+    <TextView
+        android:id="@+id/profileTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Username (big, inside the top bar area) -->
+    <TextView
+        android:id="@+id/profileUsernameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center_vertical"
+        android:text="USERNAME"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/profileTopBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Profile details card-ish area -->
+
+    <TextView
+        android:id="@+id/profileInfoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Profile Information"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileTopBar" />
+
+    <TextView
+        android:id="@+id/profileEmailTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Email:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileInfoLabel" />
+
+    <TextView
+        android:id="@+id/profileEmailTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="24dp"
+        android:text="example@example.com"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/profileEmailTitleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/profileEmailTitleTextView" />
+
+    <TextView
+        android:id="@+id/profileRoleTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Role:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileEmailTitleTextView" />
+
+    <TextView
+        android:id="@+id/profileRoleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="24dp"
+        android:text="Student"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/profileRoleTitleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/profileRoleTitleTextView" />
+
+    <TextView
+        android:id="@+id/profileJoinedTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Joined:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileRoleTitleTextView" />
+
+    <TextView
+        android:id="@+id/profileJoinedTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="24dp"
+        android:text="2025"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/profileJoinedTitleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/profileJoinedTitleTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
