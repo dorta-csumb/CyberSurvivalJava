@@ -177,17 +177,18 @@ public class PuzzleActivity extends AppCompatActivity {
         if (answered || currentProblem == null) return;
 
         boolean isCorrect = ((Button)v).getText().toString().equals(currentProblem.getProblemSolution());
-
-        // Always record the attempt, right or wrong
-        UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), isCorrect);
-        repository.insertUserProblem(userProblem);
+        long elapsedSeconds = (System.currentTimeMillis() - startMs) / 1000;
 
         if (isCorrect) {
             answered = true;
             disableAll();
+            UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), true, elapsedSeconds);
+            repository.insertUserProblem(userProblem);
             Toast.makeText(this, "Correct! ✅", Toast.LENGTH_SHORT).show();
             finish();
         } else {
+            UserProblems userProblem = new UserProblems(currentUserId, currentProblem.getProblemId(), false, elapsedSeconds);
+            repository.insertUserProblem(userProblem);
             chances--;
             updateChances();
             v.setEnabled(false);
