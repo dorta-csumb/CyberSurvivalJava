@@ -62,6 +62,11 @@ public class LandingPage extends AppCompatActivity {
             startActivity(PuzzleActivity.puzzleIntentFactory(getApplicationContext(), Problems.CATEGORY_NETWORKING, loggedInUserId));
         });
 
+        binding.satelliteButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SatelliteActivity.class);
+            startActivity(intent);
+        });
+
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -44,6 +46,7 @@
         <activity
             android:name=".PuzzleActivity"
             android:exported="false" /> <!--Toggle this to true and edit configuration to puzzle to launch activity directly -->
+        <activity android:name=".SatelliteActivity" android:exported="false" />
     </application>
 
 </manifest>
