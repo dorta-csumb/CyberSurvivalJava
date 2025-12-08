@@ -13,24 +13,26 @@ public class UserProblems {
     private int id;
     private int userId;
     private int problemId;
-    boolean isCorrect;
+    private boolean isCorrect;
+    private long timeTaken;
 
-    public UserProblems(int userId, int problemId, boolean isCorrect){
+    public UserProblems(int userId, int problemId, boolean isCorrect, long timeTaken){
         this.userId = userId;
         this.problemId = problemId;
         this.isCorrect = isCorrect;
+        this.timeTaken = timeTaken;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserProblems that = (UserProblems) o;
-        return userId == that.userId && problemId == that.problemId && isCorrect == that.isCorrect;
+        return userId == that.userId && problemId == that.problemId && isCorrect == that.isCorrect && timeTaken == that.timeTaken;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, problemId, isCorrect);
+        return Objects.hash(userId, problemId, isCorrect, timeTaken);
     }
 
     public int getId() {
@@ -63,5 +65,13 @@ public class UserProblems {
 
     public void setCorrect(boolean correct) {
         isCorrect = correct;
+    }
+
+    public long getTimeTaken() {
+        return timeTaken;
+    }
+
+    public void setTimeTaken(long timeTaken) {
+        this.timeTaken = timeTaken;
     }
 }
