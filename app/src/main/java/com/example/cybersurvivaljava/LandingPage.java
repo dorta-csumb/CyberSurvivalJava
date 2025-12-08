@@ -66,6 +66,12 @@ public class LandingPage extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SatelliteActivity.class);
             startActivity(intent);
         });
+        // Wiring up the High Scores Button
+        binding.highScoresButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LandingPage.this, ScoreActivity.class);
+            startActivity(intent);
+        });
+        // END of high scores
 
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

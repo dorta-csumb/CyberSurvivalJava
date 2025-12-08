@@ -24,27 +24,29 @@ public class ScoreActivity extends AppCompatActivity {
         // 3. Set the root of the binding as the content view for this activity.
         setContentView(binding.getRoot());
 
-        // 4. Create the Mock Data list
-        // This is our temporary, hardcoded data for testing. Later, this will be replaced
-        // with real data from Aiden's activity.
-        List<HighScoreEntry> mockScores = new ArrayList<>();
-        mockScores.add(new HighScoreEntry("David", 100, 120, 4));
-        mockScores.add(new HighScoreEntry("Aiden", 75, 155, 3));
-        mockScores.add(new HighScoreEntry("Jesus", 100, 95, 4));
-        mockScores.add(new HighScoreEntry("Adam", 50, 210, 2));
+        // 4. Initialize Repository (The connection to the database)
+        com.example.cybersurvivaljava.database.CyberSurvivalRepository repository =
+                com.example.cybersurvivaljava.database.CyberSurvivalRepository.getRepository(getApplication());
 
-        // 5. Create an instance of our Adapter
-        // We pass our list of MOCK DATA to the adapter's constructor. Finally!
-        HighScoreAdapter adapter = new HighScoreAdapter(mockScores);
-
-        // 6. Connect the Adapter to the RecyclerView
-        // We use our 'binding' variable to get a direct, safe reference to our RecyclerView.
+        // 5. Setup RecyclerView with an empty list initially
+        // This prevents the screen from being blank/crashing while data loads
+        HighScoreAdapter adapter = new HighScoreAdapter(new ArrayList<>());
         binding.highScoreRecyclerView.setAdapter(adapter);
-
-        // 7. Set the Layout Manager
-        // Concept: The LayoutManager is essential. It tells the RecyclerView HOW to arrange
-        // the items. LinearLayoutManager arranges them in a simple vertical list.
-        // Applicability: For a photo gallery, you might use a GridLayoutManager here instead.
         binding.highScoreRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Wire up Back Button
+        binding.backButton.setOnClickListener(v -> {
+            finish(); // Closes this activity and returns to the previous one
+        });
+
+        // 6. Observe Real Data from Database
+        // This code runs automatically whenever the database changes!
+        repository.getHighScores().observe(this, highScores -> {
+            if (highScores != null) {
+                // Create a new adapter with the REAL data and set it
+                HighScoreAdapter newAdapter = new HighScoreAdapter(highScores);
+                binding.highScoreRecyclerView.setAdapter(newAdapter);
+            }
+        });
     }
 }
