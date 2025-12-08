@@ -73,4 +73,9 @@ public class CyberSurvivalRepository {
     public LiveData<List<Problems>> getProblemsByCategory(int categoryId) {
         return problemsDAO.getProblemsByCategory(categoryId);
     }
+
+    // High Score Integration
+    public androidx.lifecycle.LiveData<java.util.List<com.example.cybersurvivaljava.HighScoreEntry>> getHighScores() {
+        return userProblemsDAO.getHighScores();
+    }
 }

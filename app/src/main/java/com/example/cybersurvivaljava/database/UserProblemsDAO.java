@@ -25,7 +25,7 @@ public interface UserProblemsDAO {
     @Query("SELECT " +
             "u.username AS userName, " +
             "(CAST(SUM(CASE WHEN up.isCorrect THEN 1 ELSE 0 END) AS INTEGER) * 100 / COUNT(*)) AS totalAccuracy, " +
-            "CAST(AVG(COALESCE(up.timeTaken, 0)) AS INTEGER) AS totalSpeed, " +
+            "CAST(AVG(COALESCE(up.timeTaken, 0)) AS INTEGER) AS totalSpeed, " + // <--- REAL MATH NOW
             "CAST(SUM(CASE WHEN up.isCorrect THEN 1 ELSE 0 END) AS INTEGER) AS tasksCompleted " +
             "FROM " + CyberSurvivalDatabase.USER_PROBLEMS_TABLE_NAME + " up " +
             "JOIN " + CyberSurvivalDatabase.USER_TABLE_NAME + " u ON up.userId = u.userId " +

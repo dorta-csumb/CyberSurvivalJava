@@ -1,61 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
 
+    <!-- Purple Header Background -->
+    <View
+        android:id="@+id/headerBackground"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#673AB7"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Screen Title -->
     <TextView
-        android:id="@+id/headerTasksDone"
-        android:layout_width="0dp"
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Tasks Done"
+        android:text="High Scores"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/headerBackground"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/headerSpeed"
-        app:layout_constraintTop_toTopOf="@+id/headerSpeed" />
-
-    <TextView
-        android:id="@+id/headerPlayer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Player"
-        app:layout_constraintEnd_toStartOf="@+id/headerAccuracy"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/headerAccuracy"
-        android:layout_width="0dp"
+    <!-- Column Headers -->
+    <LinearLayout
+        android:id="@+id/columnHeaders"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Accuracy"
-        app:layout_constraintEnd_toStartOf="@+id/headerSpeed"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/headerPlayer"
-        app:layout_constraintTop_toTopOf="@+id/headerPlayer" />
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="16dp"
+        android:weightSum="4.5"
+        app:layout_constraintTop_toBottomOf="@+id/headerBackground">
 
-    <TextView
-        android:id="@+id/headerSpeed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Speed"
-        app:layout_constraintEnd_toStartOf="@+id/headerTasksDone"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/headerAccuracy"
-        app:layout_constraintTop_toTopOf="@+id/headerAccuracy" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="PLAYER"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ACC"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SPEED"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TASKS"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/highScoreRecyclerView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/backButton"
+        app:layout_constraintTop_toBottomOf="@+id/columnHeaders" />
+
+    <!-- back button -->
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Back to Menu"
+        android:backgroundTint="#673AB7"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerAccuracy" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
