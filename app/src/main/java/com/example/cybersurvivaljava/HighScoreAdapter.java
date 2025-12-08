@@ -33,6 +33,23 @@ public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.View
         holder.accuracyTextView.setText(currentEntry.getTotalAccuracy() + "%");
         holder.speedTextView.setText(currentEntry.getTotalSpeed() + "s");
         holder.tasksCompletedTextView.setText(currentEntry.getTasksCompleted() + "/4");
+        // Click Listener opens Score Details
+        holder.itemView.setOnClickListener(v -> {
+            // Get context from the item view
+            android.content.Context context = holder.itemView.getContext();
+
+            // Use the new Intent Factory to create the intent with all data attached
+            android.content.Intent intent = ScoreDetailsActivity.getIntent(
+                    context,
+                    currentEntry.getUserName(),
+                    currentEntry.getTotalAccuracy(),
+                    currentEntry.getTotalSpeed(),
+                    currentEntry.getTasksCompleted()
+            );
+
+            // Launch the details screen
+            context.startActivity(intent);
+        });
     }
 
     @Override

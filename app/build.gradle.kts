@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.recyclerview) //added Score Activity recycler view
     implementation("androidx.room:room-runtime:2.8.3")
     annotationProcessor("androidx.room:room-compiler:2.8.3")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
